@@ -33,7 +33,7 @@ var gTrain = new Train('The G Train', gStations);
 var trains = [lTrain, nTrain, sixTrain, gTrain];
 
 
-// Functions for displaying in prompts
+// Functions for displaying in prompts.
 function displayLines() {
   var trainNames = "";
   _.each(trains, function(train) {
@@ -49,17 +49,8 @@ function displayStations(trainInput) {
   return selectedTrain.stations.join("\n");
 }
 
-// Prompts
-var msg1 = "Which train would you like to get on?\n" + displayLines();
-var startTrain = prompt(msg1);
-var msg2 = "At which station would you like to get on?\n" + displayStations(startTrain);
-var startStation = prompt(msg2);
-var msg3 = "Which train would you like to get off?\n" + displayLines();
-var endTrain = prompt(msg3);
-var msg4 = "At which station would you like to get off?\n" + displayStations(endTrain);
-var endStation = prompt(msg4);
-
 // Function to handle if starting train and ending train are the same or different. Could be broken up further. Whoops.
+// Does not account for case where G train does not intersect with other trains.
 function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) {
   if (startTrain === endTrain) {
     var trainToCalculate = _.find(trains, function(train) {
@@ -92,4 +83,22 @@ function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) 
   }
 }
 
-calculateNumberOfStops(startTrain, startStation, endTrain, endStation);
+//Begin user interaction
+var message = "Do you want to plan a trip? (y/n)";
+choice = prompt(message);
+var numberOfTrips = 0;
+
+while (choice != "n") {
+  var msg1 = "Which train would you like to get on?\n" + displayLines();
+  var startTrain = prompt(msg1);
+  var msg2 = "At which station would you like to get on?\n" + displayStations(startTrain);
+  var startStation = prompt(msg2);
+  var msg3 = "Which train would you like to get off?\n" + displayLines();
+  var endTrain = prompt(msg3);
+  var msg4 = "At which station would you like to get off?\n" + displayStations(endTrain);
+  var endStation = prompt(msg4);
+  calculateNumberOfStops(startTrain, startStation, endTrain, endStation);
+  numberOfTrips++;
+  choice = prompt("Do you want to plan another trip? (y/n)");
+}
+alert(numberOfTrips + " trips will cost $" + (numberOfTrips * 2.50).toFixed(2) + ".");
