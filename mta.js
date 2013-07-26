@@ -43,17 +43,10 @@ function displayLines() {
 }
 
 function displayStations(trainInput) {
-  var selectedTrain = null;
-  _.each(trains, function(train) {
-    if (train.name === trainInput) {
-      selectedTrain = train;
-    }
+  var selectedTrain = _.find(trains, function(train) {
+    return train.name === trainInput;
   });
-  var stationNames = "";
-  _.each(selectedTrain.stations, function(station) {
-    stationNames += station + "\n";
-  });
-  return stationNames.trim();
+  return selectedTrain.stations.join("\n");
 }
 
 // Prompts
@@ -66,7 +59,11 @@ var endTrain = prompt(msg3);
 var msg4 = "At which station would you like to get off?\n" + displayStations(endTrain);
 var endStation = prompt(msg4);
 
+// function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) {
+//   if (startTrain === endTrain) {
 
+//   }
+// }
 
 
 
