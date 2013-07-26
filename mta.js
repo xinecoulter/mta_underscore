@@ -59,69 +59,37 @@ var endTrain = prompt(msg3);
 var msg4 = "At which station would you like to get off?\n" + displayStations(endTrain);
 var endStation = prompt(msg4);
 
+// Function to handle if starting train and ending train are the same or different. Could be broken up further. Whoops.
 function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) {
   if (startTrain === endTrain) {
     var trainToCalculate = _.find(trains, function(train) {
       return train.name === startTrain;
     });
-  var numberOfStops = Math.abs(trainToCalculate.stations.indexOf(endStation) - trainToCalculate.stations.indexOf(startStation));
-  var alertMessage = "There are " + numberOfStops + " stops between " + startStation + " and " + endStation + " on the " + startTrain + ".";
-  alert(alertMessage);
+    // This calculates the number of stops:
+    var numberOfStops = Math.abs(trainToCalculate.stations.indexOf(endStation) - trainToCalculate.stations.indexOf(startStation));
+
+    var alertMessage = "There are " + numberOfStops + " stops between " + startStation + " and " + endStation + " on the " + startTrain + ".";
+    alert(alertMessage);
+  } else {
+    var startTrainToCalculate = _.find(trains, function(train) {
+      return train.name === startTrain;
+    });
+    var endTrainToCalculate = _.find(trains, function(train) {
+      return train.name === endTrain;
+    });
+
+    // This will return an array of intersecting stations:
+    var intersectingStation = (_.intersection(startTrainToCalculate.stations, endTrainToCalculate.stations))[0];
+    // This calculates the number of stops on the starting train:
+    var numberOfStopsOnStartTrain = Math.abs(startTrainToCalculate.stations.indexOf(intersectingStation) - startTrainToCalculate.stations.indexOf(startStation));
+    // This calculates the number of stops on the ending train:
+    var numberOfStopsOnEndTrain = Math.abs(endTrainToCalculate.stations.indexOf(endStation) - endTrainToCalculate.stations.indexOf(intersectingStation));
+    // This calculates the number of total stops:
+    var numberOfTotalStops = numberOfStopsOnStartTrain + numberOfStopsOnEndTrain;
+
+    var alertMessage = "There are " + numberOfStopsOnStartTrain + " stops between " + startStation + " and your connection at " + intersectingStation + " on the " + startTrain + ".\nThere are " + numberOfStopsOnEndTrain + " stops between " + intersectingStation + " and " + endStation + " on the " + endTrain + ".\nThere are a total of " +numberOfTotalStops + " stops.";
+    alert(alertMessage);
   }
 }
 
 calculateNumberOfStops(startTrain, startStation, endTrain, endStation);
-
-
-
-
-
-// var msg = "Which train would you \nlike to get on?\n" + displayLines();
-// var startTrain = prompt(msg);
-
-// function displayLines() {
-//   var trainNames = "";
-//   for (var i = 0; i < trains.length; i++) {
-//     trainNames += trains[i].name + "\n";
-//   }
-
-//   forEach(trains, trainName);
-
-//   return trainNames.trim();
-// }
-
-
-// function trainName(train){
-//   return train.name + "\n"
-// }
-
-// function forEach(array, func) {
-//   for (var i = 0; i < array.length; i++) {
-//     func(array[i]);
-//   }
-// }
-
-// function map(array, func) {
-//   var newArray = [];
-//   for (var i = 0; i < array.length; i++) {
-//     newArray.push(func(array[i]));
-//   }
-//   return newArray;
-// }
-
-// function displayStations() {
-//   var train = null;
-//   for (var j = 0; j < trains.length; j++) {
-//     if (trains[j].name === startTrain) {
-//       train = trains[j];
-//     }
-//   }
-//   var trainStations = "";
-//   for (var k = 0; k < train.stations.length; k++) {
-//     trainStations += train.stations[k] + "\n";
-//   }
-//   return trainStations.trim();
-// }
-
-// var msg2 = "Which station would you \nlike to get on?\n" + displayStations();
-// var startStation = prompt(msg2);
