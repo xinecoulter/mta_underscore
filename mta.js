@@ -61,7 +61,10 @@ var msg1 = "Which train would you like to get on?\n" + displayLines();
 var startTrain = prompt(msg1);
 var msg2 = "At which station would you like to get on?\n" + displayStations();
 var startStation = prompt(msg2);
-
+var msg3 = "Which train would you like to get off?\n" + displayLines();
+var endTrain = prompt(msg3);
+var msg4 = "At which station would you like to get off?\n" + displayStations();
+var endStation = prompt(msg4);
 
 
 
