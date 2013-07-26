@@ -59,13 +59,18 @@ var endTrain = prompt(msg3);
 var msg4 = "At which station would you like to get off?\n" + displayStations(endTrain);
 var endStation = prompt(msg4);
 
-// function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) {
-//   if (startTrain === endTrain) {
+function calculateNumberOfStops(startTrain, startStation, endTrain, endStation) {
+  if (startTrain === endTrain) {
+    var trainToCalculate = _.find(trains, function(train) {
+      return train.name === startTrain;
+    });
+  var numberOfStops = Math.abs(trainToCalculate.stations.indexOf(endStation) - trainToCalculate.stations.indexOf(startStation));
+  var alertMessage = "There are " + numberOfStops + " stops between " + startStation + " and " + endStation + " on the " + startTrain + ".";
+  alert(alertMessage);
+  }
+}
 
-//   }
-// }
-
-
+calculateNumberOfStops(startTrain, startStation, endTrain, endStation);
 
 
 
